@@ -60,7 +60,7 @@ def main():
     (options, args) = parser.parse_args()
 
     host = options.tgtHost
-    password_file = options.passwdFile
+    password_file = options.password_file
     user = options.user
 
     # Validate that required options are provided
