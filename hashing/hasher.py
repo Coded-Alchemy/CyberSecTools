@@ -2,6 +2,8 @@ import argparse
 import hashlib
 import os
 
+import pyfiglet
+
 
 def sha256_hash_string(input_string):
     """
@@ -42,6 +44,11 @@ def sha256_hash_file(file_path):
 
     except Exception as exception:
         raise RuntimeError(f"An error occurred while hashing the file: {exception}")
+
+
+# Display ASCII banner
+ascii_banner = pyfiglet.figlet_format("Hasher")
+print(ascii_banner)
 
 
 def main():
