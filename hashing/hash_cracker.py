@@ -3,7 +3,7 @@ import pyfiglet
 import optparse
 
 # Algorithm list this script works with.
-algorithm_list = ['md5', 'sha256', 'sha512']
+algorithm_list = ['md5', 'sha256', 'sha512', 'sha384']
 
 def crack_hash(hash_to_crack, wordlist_path, algorithm):
     """
@@ -28,6 +28,8 @@ def crack_hash(hash_to_crack, wordlist_path, algorithm):
                     hashed_password = hashlib.sha256(password.encode()).hexdigest()
                 elif algorithm == algorithm_list[2]:
                     hashed_password = hashlib.sha512(password.encode()).hexdigest()
+                elif algorithm == algorithm_list[3]:
+                    hashed_password = hashlib.sha384(password.encode()).hexdigest()
                 else:
                     raise ValueError(f"Unsupported algorithm: {algorithm}")
 
@@ -49,7 +51,7 @@ def main():
     # Display banner
     ascii_banner = pyfiglet.figlet_format("Hash Cracker")
     print(ascii_banner)
-    print("Welcome to the hash cracker for MD5 and SHA256!\n")
+    print("Welcome to the Hash Cracker, lets do some crack!\n")
 
     # Set up argument parser
     parser = optparse.OptionParser(
@@ -59,7 +61,7 @@ def main():
     parser.add_option("-w", dest="wordlist", type="string", help="Specify the wordlist file path.")
     parser.add_option("-H", dest="hash", type="string", help="Specify the hash to crack.")
     parser.add_option("-a", dest="algorithm", type="string", default="md5",
-                      help="Specify the hashing algorithm (default: md5). Options: md5, sha256, sha512.")
+                      help="Specify the hashing algorithm (default: md5). Options: md5, sha256, sha512, sha384.")
 
     (options, args) = parser.parse_args()
 
