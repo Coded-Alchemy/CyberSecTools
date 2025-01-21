@@ -2,6 +2,9 @@ import hashlib
 import pyfiglet
 import optparse
 
+# Algorithm list this script works with.
+algorithm_list = ['md5', 'sha256', 'sha512']
+
 def crack_hash(hash_to_crack, wordlist_path, algorithm):
     """
     Attempts to crack the given hash using a wordlist and specified algorithm.
@@ -19,10 +22,12 @@ def crack_hash(hash_to_crack, wordlist_path, algorithm):
             for line in file:
                 password = line.strip()  # Remove extra whitespace/newlines
                 # Select the hashing algorithm
-                if algorithm == 'md5':
+                if algorithm == algorithm_list[0]:
                     hashed_password = hashlib.md5(password.encode()).hexdigest()
-                elif algorithm == 'sha256':
+                elif algorithm == algorithm_list[1]:
                     hashed_password = hashlib.sha256(password.encode()).hexdigest()
+                elif algorithm == algorithm_list[2]:
+                    hashed_password = hashlib.sha512(password.encode()).hexdigest()
                 else:
                     raise ValueError(f"Unsupported algorithm: {algorithm}")
 
@@ -54,7 +59,7 @@ def main():
     parser.add_option("-w", dest="wordlist", type="string", help="Specify the wordlist file path.")
     parser.add_option("-H", dest="hash", type="string", help="Specify the hash to crack.")
     parser.add_option("-a", dest="algorithm", type="string", default="md5",
-                      help="Specify the hashing algorithm (default: md5). Options: md5, sha256.")
+                      help="Specify the hashing algorithm (default: md5). Options: md5, sha256, sha512.")
 
     (options, args) = parser.parse_args()
 
@@ -67,8 +72,8 @@ def main():
     algorithm = options.algorithm.lower()
 
     # Validate algorithm
-    if algorithm not in ['md5', 'sha256']:
-        print(f"[!] Error: Unsupported algorithm '{algorithm}'. Use 'md5' or 'sha256'.")
+    if algorithm not in algorithm_list:
+        print(f"[!] Error: Unsupported algorithm '{algorithm}'. Use {algorithm_list}.")
         exit(1)
 
     print(f"[*] Attempting to crack hash: {hash_to_crack}")
